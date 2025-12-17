@@ -3,6 +3,10 @@
     "self-test": {
       "commandName": "Project",
       "commandLineArgs": "self-test -s 750000 -c 50000"
+    },
+    "self-test-large": {
+      "commandName": "Project",
+      "commandLineArgs": "self-test -s 174044400 -c 100"
     }
   }
 }

@@ -27,9 +27,15 @@ namespace PairwiseSumSquares
 
         private void SelfTest(int testOffset, int testCount)
         {
-            int[] managed = new int[testCount];
+            var stopwatch = new Stopwatch();
+            stopwatch.Restart();
+            ShaderSolver solver = new ShaderSolver(testCount);
+            solver.Solve(testOffset);
+            stopwatch.Stop();
+            Console.WriteLine($"ShaderSolver tested {testCount} numbers in {stopwatch.Elapsed.TotalSeconds.ToString("0.00")}");
 
-            Stopwatch stopwatch = new Stopwatch();
+            int[] managed = new int[testCount];
+            stopwatch = new Stopwatch();
             stopwatch.Start();
             Parallel.For(0, testCount, i =>
             {
@@ -38,16 +44,10 @@ namespace PairwiseSumSquares
             stopwatch.Stop();
             Console.WriteLine($"SelfTest managed: tested {testCount} numbers in {stopwatch.Elapsed.TotalSeconds.ToString("0.00")}");
 
-            stopwatch.Restart();
-            ShaderSolver solver = new ShaderSolver(testCount);
-            solver.Solve(testOffset);
-            stopwatch.Stop();
-            Console.WriteLine($"ShaderSolver tested {testCount} numbers in {stopwatch.Elapsed.TotalSeconds.ToString("0.00")}");
-
             for (int i = 0; i < testCount; i++)
             {
                 if (managed[i] != solver.results[i])
-                    throw new Exception($"Shader solver returned different result for {i} : {managed[i]}, should be {managed[i]}");
+                    throw new Exception($"Shader solver returned different result for {i} : {solver.results[i]}, should be {managed[i]}");
                 if (managed[i] == 5)
                 {
                     var list = ManagedSolver.GetLargestSet((ulong)(testOffset + i));
