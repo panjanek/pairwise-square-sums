@@ -1,0 +1,111 @@
+﻿#version 430
+
+layout(local_size_x = {LocalSizeX}) in;
+
+struct ShaderConfig {
+    uint offset;
+    uint count;
+};
+
+layout(std430, binding = 0) buffer ConfigBuffer {
+    ShaderConfig config;
+};
+
+layout(std430, binding = 1) buffer OutputBuffer
+{
+    uint results[];
+};
+
+const float SQRT2        = 1.41421356237;
+
+bool is_square(uint sq)
+{
+    uint s = uint(sqrt(float(sq)));
+    return s * s == sq;
+}
+
+uint index_low(uint sq)
+{
+    //return uint(ceil(sqrt(float(sq))));
+    uint i = uint(sqrt(float(sq)));
+    return (i * i < sq) ? (i + 1u) : i;
+}
+
+uint index_high(uint k)
+{
+    return (k * 181u) >> 7; // k * 1.414
+}
+
+uint find(uint a1)
+{
+    uint result = 0;
+    uint s2_i_start = index_low(a1);
+    uint s2_i_end = index_high(s2_i_start);
+    for (uint s2_i = s2_i_start; s2_i < s2_i_end; s2_i++)
+    {
+        uint s2 = s2_i * s2_i;
+        uint a2 = s2 - a1;
+        if (a2 < a1)
+        {
+            uint s3_i_start = index_low(a2);
+            uint s3_i_end = index_high(s3_i_start);
+            for (uint s3_i = s3_i_start; s3_i < s3_i_end; s3_i++)
+            {
+                uint s3 = s3_i * s3_i;
+                uint a3 = s3 - a2;
+                if (a3 < a2 && is_square(a1 + a3))
+                {
+                    //3 found!
+                    uint s4_i_start = index_low(a3);
+                    uint s4_i_end = index_high(s4_i_start);
+                    for (uint s4_i = s4_i_start; s4_i < s4_i_end; s4_i++)
+                    {
+                        uint s4 = s4_i * s4_i;
+                        uint a4 = s4 - a3;
+                        if (a4 < a3 && is_square(a1 + a4) && is_square(a2 + a4))
+                        {
+                            if (result < 4) 
+                                result = 4;
+
+                            uint s5_i_start = index_low(a4);
+                            uint s5_i_end = index_high(s5_i_start);
+                            for (uint s5_i = s5_i_start; s5_i < s5_i_end; s5_i++)
+                            {
+                                uint s5 = s5_i * s5_i;
+                                uint a5 = s5 - a4;
+                                if (a5 < a4 && is_square(a1 + a5) && is_square(a2 + a5) && is_square(a3 + a5))
+                                {
+                                    if (result < 5)
+                                        result = 5;
+         
+
+                                    uint s6_i_start = index_low(a5);
+                                    uint s6_i_end = index_high(s6_i_start);
+                                    for (uint s6_i = s6_i_start; s6_i < s6_i_end; s6_i++)
+                                    {
+                                        uint s6 = s6_i * s6_i;
+                                        uint a6 = s6 - a5;
+                                        if (a6 < a5 && is_square(a1 + a6) && is_square(a2 + a6) && is_square(a3 + a6) && is_square(a4 + a6))
+                                        {
+                                            return 6;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
+void main()
+{
+    uint idx = gl_GlobalInvocationID.x;
+    if (idx < config.count) {
+        results[idx] = find(int(config.offset + idx));
+    }
+}

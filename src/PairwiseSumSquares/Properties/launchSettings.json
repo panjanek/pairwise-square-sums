@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "self-test": {
+      "commandName": "Project",
+      "commandLineArgs": "self-test -s 750000 -c 50000"
+    }
+  }
+}
