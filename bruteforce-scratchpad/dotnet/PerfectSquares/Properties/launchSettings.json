@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PerfectSquares": {
+      "commandName": "Project",
+      "commandLineArgs": "--threads 20 --start 1 --batch 1000000 --out test1.txt",
+      "workingDirectory": "C:\\tmp\\perfect-sqares\\PerfectSquares",
+      "hotReloadEnabled": false
+    }
+  }
+}
