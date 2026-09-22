@@ -1,0 +1,4 @@
+s4: S in [900000000000, 900000000001), 1 threads, chunk 4096, ext=on
+  thread  0: S [900000000000,900000000001) 4-sets 3 5-sets 0  0.0s
+TOTAL: S_done=1 pairs=6 S_ge3=1 triples=20 4-sets=3 5-sets=0 6-sets=0 multi-ext-4sets=0 ext_cand=757 ext_sqrt=253  wall=1.0s
+5-sets by log2(largest element):

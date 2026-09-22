@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "checked_at": "2026-09-22T19:14:53.553037+00:00",
+  "seconds": 18.733,
+  "frontier_S_exclusive": 4763200000000,
+  "A115040_a6_strict_lower_bound": 1190800000000,
+  "excludes_all_members_at_most_10_pow_12": true,
+  "positive_sextuples": 0,
+  "cumulative_unique_five_sets": 3791838,
+  "cumulative_primitive_near_misses": 740,
+  "cumulative_square_total_near_misses": 477,
+  "historical_capacity_check": {
+    "historical_S_exclusive": 1000000000000,
+    "maximum_divisors": 6720,
+    "divisor_witness": 963761198400,
+    "representation_upper_bound": 192,
+    "representation_product_witness": 785817263725,
+    "historical_max_extensions_in_complete_raw_output": 3
+  },
+  "continuations": [
+    {
+      "run": "exhaustive-2026-09-16",
+      "frontier": 1954600000000,
+      "blocks": 192,
+      "unique_five_sets": 759709,
+      "primitive_near_misses": 459,
+      "new_primitive_near_misses": 131,
+      "capacity_high_water": {
+        "representations": 192,
+        "divisors": 4320,
+        "extensions": 3
+      }
+    },
+    {
+      "run": "exhaustive-2026-09-18",
+      "frontier": 2723100000000,
+      "blocks": 155,
+      "unique_five_sets": 512820,
+      "primitive_near_misses": 347,
+      "new_primitive_near_misses": 52,
+      "capacity_high_water": {
+        "representations": 192,
+        "divisors": 4320,
+        "extensions": 3
+      }
+    },
+    {
+      "run": "exhaustive-2026-09-19",
+      "frontier": 3512100000000,
+      "blocks": 159,
+      "unique_five_sets": 471454,
+      "primitive_near_misses": 321,
+      "new_primitive_near_misses": 42,
+      "capacity_high_water": {
+        "representations": 216,
+        "divisors": 4320,
+        "extensions": 3
+      }
+    },
+    {
+      "run": "exhaustive-2026-09-20",
+      "frontier": 4763200000000,
+      "blocks": 252,
+      "unique_five_sets": 673688,
+      "primitive_near_misses": 433,
+      "new_primitive_near_misses": 85,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 4608,
+        "extensions": 3
+      }
+    }
+  ],
+  "scope": "Package hashes, contiguous logged coverage including repaired boundaries, completion checkpoints, source/binary/output hashes, exact checks of every stored five-set and multi-extension record, near-miss classifications, and historical capacity bounds. This is an evidence audit, not a fresh enumeration of every quadruple."
+}

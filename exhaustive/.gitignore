@@ -1,0 +1,8 @@
+__pycache__/
+/verification.local.json
+/s4
+/s4.exe
+/small.out
+/small.err
+/small.ckpt
+/reproduction/

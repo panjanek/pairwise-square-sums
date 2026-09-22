@@ -1,0 +1,10 @@
+{
+  "five_sets": 1374180,
+  "multi_lines": 3873,
+  "invalid": 0,
+  "unique_five_sets": 1374167,
+  "duplicate_five_lines": 13,
+  "primitive_pseudos": 430,
+  "square_total": 271,
+  "data_sha256": "1dca944413520b5cf1596c4c5820b454e1037c13177ff479d39435e5ee4d5301"
+}

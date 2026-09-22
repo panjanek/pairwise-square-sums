@@ -1,0 +1,2 @@
+# Preserve byte-for-byte hashes across Linux and Windows checkouts.
+* -text

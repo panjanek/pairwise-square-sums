@@ -1,0 +1,19 @@
+[Sat Sep  5 10:42:43 CEST 2026] slice 1: S in [100000000001,200000000000)
+[Sat Sep  5 11:13:40 CEST 2026] slice 1 done: 177530 five-sets, 508 pseudo, 0 SIX-SETS
+[Sat Sep  5 11:13:40 CEST 2026] slice 2: S in [200000000001,300000000000)
+[Sat Sep  5 11:48:08 CEST 2026] slice 2 done: 148292 five-sets, 411 pseudo, 0 SIX-SETS
+[Sat Sep  5 11:48:08 CEST 2026] slice 3: S in [300000000001,400000000000)
+[Sat Sep  5 12:23:49 CEST 2026] slice 3 done: 132092 five-sets, 355 pseudo, 0 SIX-SETS
+[Sat Sep  5 12:23:49 CEST 2026] slice 4: S in [400000000001,500000000000)
+[Sat Sep  5 13:02:48 CEST 2026] slice 4 done: 121021 five-sets, 303 pseudo, 0 SIX-SETS
+[Sat Sep  5 13:02:48 CEST 2026] slice 5: S in [500000000001,600000000000)
+[Sat Sep  5 13:46:49 CEST 2026] slice 5 done: 112562 five-sets, 269 pseudo, 0 SIX-SETS
+[Sat Sep  5 13:46:49 CEST 2026] slice 6: S in [600000000001,700000000000)
+[Sat Sep  5 14:28:45 CEST 2026] slice 6 done: 106342 five-sets, 260 pseudo, 0 SIX-SETS
+[Sat Sep  5 14:28:45 CEST 2026] slice 7: S in [700000000001,800000000000)
+[Sat Sep  5 15:12:40 CEST 2026] slice 7 done: 100613 five-sets, 239 pseudo, 0 SIX-SETS
+[Sat Sep  5 15:12:40 CEST 2026] slice 8: S in [800000000001,900000000000)
+[Sat Sep  5 15:58:22 CEST 2026] slice 8 done: 96113 five-sets, 233 pseudo, 0 SIX-SETS
+[Sat Sep  5 15:58:22 CEST 2026] slice 9: S in [900000000001,1000000000000)
+[Sat Sep  5 16:44:03 CEST 2026] slice 9 done: 92634 five-sets, 221 pseudo, 0 SIX-SETS
+[Sat Sep  5 16:44:03 CEST 2026] all slices done
