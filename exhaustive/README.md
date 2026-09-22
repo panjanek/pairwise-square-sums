@@ -6,7 +6,7 @@
 
 Here a(6) is the least possible largest member of a set of six **distinct positive integers** whose 15 pairwise sums are perfect squares, if such a set exists. This is a computational exclusion, not a determination of a(6) or a proof that no positive sextuple exists at any size.
 
-The [OEIS A115040 entry](https://oeis.org/A115040), checked on 22 September 2026, still states the earlier bound a(6) > 10^9. This repository supplies the proposed improvement, source code, raw results, completion logs, and reproducible evidence checks. The proposed OEIS text is in [OEIS-A115040-submission.md](OEIS-A115040-submission.md).
+The [OEIS A115040 entry](https://oeis.org/A115040), checked on 22 September 2026, still states the earlier bound a(6) > 10^9. This repository supplies the proposed improvement, source code, raw results, completion logs, and reproducible evidence checks.
 
 ## 1. What was searched, and why it proves the bound
 
@@ -54,7 +54,7 @@ The verifier checks:
 - Every stored multi-extension quadruple, all of its extensions, and every extension pair; any square remaining pair would be a sextuple and fails the claimed exclusion.
 - Primitive near-miss catalogs, square totals, Euler classifications, novelty against preceding catalogs, and historical capacity bounds.
 
-[verification.json](verification.json) records the package verification performed before publication. It is a generated report, excluded from its own checksum list. `SHA256SUMS` preserves exact bytes of the supporting files; `.gitattributes` prevents line-ending conversion during a Git checkout. A locally generated `verification.local.json` is also excluded from the published checksum list.
+[verification.json](verification.json) records a successful verification of this package. It is a generated report, excluded from its own checksum list. `SHA256SUMS` preserves exact bytes of the supporting files; `.gitattributes` prevents line-ending conversion during a Git checkout. A locally generated `verification.local.json` is also excluded from the published checksum list.
 
 ### Scope of the computational evidence
 
@@ -166,7 +166,6 @@ The example uses four low-priority workers for convenience; thread count is not 
 
 | Path | Purpose |
 |---|---|
-| `OEIS-A115040-submission.md` | Paste-ready comment and link proposal |
 | `s4.c` | Current, unchanged continuation source |
 | `verify.py` | Portable audit of the entire packaged evidence |
 | `verification.json` | Successful package verification record |

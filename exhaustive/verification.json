@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "checked_at": "2026-09-22T19:14:53.553037+00:00",
-  "seconds": 18.733,
+  "checked_at": "2026-09-22T19:38:39.746495+00:00",
+  "seconds": 16.559,
   "frontier_S_exclusive": 4763200000000,
   "A115040_a6_strict_lower_bound": 1190800000000,
   "excludes_all_members_at_most_10_pow_12": true,

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Seal the publishable files; generated local reports/builds are excluded."""
+"""Seal public files; private submission notes and generated reports are excluded."""
 import hashlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 TOP = ('.gitattributes', '.gitignore', 'LICENSE', 'README.md',
-       'OEIS-A115040-submission.md', 's4.c', 'analyze.py', 'analysis_1e12.txt',
+       's4.c', 'analyze.py', 'analysis_1e12.txt',
        'verify.py', 'test_verify.py', 'make_checksums.py')
 
 
