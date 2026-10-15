@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 TOP = ('.gitattributes', '.gitignore', 'LICENSE', 'README.md',
        's4.c', 'analyze.py', 'analysis_1e12.txt',
-       'verify.py', 'test_verify.py', 'make_checksums.py')
+       'verify.py', 'compact.py', 'pack_compact.py', 'test_verify.py', 'make_checksums.py')
 
 
 def main():

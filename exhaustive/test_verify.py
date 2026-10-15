@@ -4,6 +4,7 @@ from pathlib import Path
 import tarfile
 import tempfile
 import unittest
+import compact
 import verify
 
 
@@ -45,6 +46,34 @@ class VerificationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 verify.unpack(archive, target)
             self.assertFalse((root/'outside').exists())
+
+    def test_checkpoint_requires_every_counter_and_done(self):
+        totals = dict.fromkeys(compact.COUNTERS, 0)
+        totals['S_done'] = 20
+        block = {'lo':100, 'hi':120, 'totals':totals}
+        manifest = {'threads':2, 'chunk_log2':20}
+        checkpoint = ('s4ckpt v1\n100 120 2 1048576\n'
+                      '0 110 110 10 0 0 0 0 0 0 0 0 0\n'
+                      '1 120 120 10 0 0 0 0 0 0 0 0 0\nDONE\n')
+        self.assertEqual(len(compact.check_checkpoint(verify, checkpoint, block, manifest)), 2)
+        for broken in (checkpoint.replace('DONE\n', ''),
+                       checkpoint.replace('1 120 120', '1 119 120'),
+                       checkpoint.replace('0 110 110 10 0', '0 110 110 10 1')):
+            with self.assertRaises(ValueError):
+                compact.check_checkpoint(verify, broken, block, manifest)
+
+    def test_predecessor_nested_name_and_hash_are_checked(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            previous = Path(tmp)/'previous'; previous.mkdir()
+            path = previous/'manifest.json'; path.write_text('{}')
+            predecessor = {'directory':'/old/private/runs/previous/exhaustive',
+                           'frontier':120, 'files':{'manifest.json':verify.digest(path)}}
+            compact.check_predecessor(verify, predecessor, previous, 'previous', 120, {'start':120})
+            with self.assertRaises(ValueError):
+                compact.check_predecessor(verify, predecessor, previous, 'previous', 120, {'start':121})
+            path.write_text('{"changed":true}')
+            with self.assertRaises(ValueError):
+                compact.check_predecessor(verify, predecessor, previous, 'previous', 120, {'start':120})
 
 
 if __name__ == '__main__':

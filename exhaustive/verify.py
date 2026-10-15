@@ -5,6 +5,7 @@ Python 3.10+, standard library only. Run without -O (archived checks use assert)
 The original audit records are read-only. --report writes a new summary.
 """
 import argparse
+import compact
 from collections import Counter
 from datetime import datetime, timezone
 import gzip
@@ -25,7 +26,7 @@ ROOT = Path(__file__).resolve().parent
 sys.dont_write_bytecode = True
 RUNS = ('exhaustive-2026-09-16', 'exhaustive-2026-09-18',
         'exhaustive-2026-09-19', 'exhaustive-2026-09-20')
-FRONTIER = 4_763_200_000_000
+FRONTIER = 12_000_000_000_000
 HISTORICAL_SHA = '1dca944413520b5cf1596c4c5820b454e1037c13177ff479d39435e5ee4d5301'
 spec = importlib.util.spec_from_file_location(
     'archived_verifier', ROOT/'evidence/verify_continuation.original.py')
@@ -184,7 +185,7 @@ def check_catalog(saved, near):
         require(record['euler_squares'] == original.euler_count(values, bad), 'Euler classification mismatch')
 
 
-def verify():
+def verify(raw_root=None):
     require(__debug__, 'Run without python -O; the archived verifier uses assertions')
     start = time.monotonic()
     for line in (ROOT/'SHA256SUMS').read_text().splitlines():
@@ -267,25 +268,61 @@ def verify():
                             'unique_five_sets':len(five), 'primitive_near_misses':len(near),
                             'new_primitive_near_misses':len(new), 'capacity_high_water':dict(maxima)})
             previous = directory; del five
-    require(cursor == FRONTIER and cumulative_five == 3791838 and len(baseline) == 740, 'Final totals')
-    require(sum(square(sum(v)) for v in baseline) == 477, 'Cumulative square totals')
+
+        previous_name = RUNS[-1]
+        for name in compact.RUNS:
+            print(f'Checking compact continuation {name}...', flush=True)
+            unpack(ROOT/'evidence'/(name+'-compact.tar.gz'), base)
+            directory = base/name
+            manifest = compact.read(directory/'manifest.json')
+            compact.check_predecessor(sys.modules[__name__], manifest['previous_run'],
+                                      previous, previous_name, cursor, manifest)
+            cursor, count_five, near, independent, maxima, partials = compact.check_run(
+                sys.modules[__name__], directory, manifest, raw_root)
+            saved = {tuple(r['values']):r for r in compact.read(directory/'near-misses.json')}
+            check_catalog(saved, near)
+            new = set(near)-set(baseline)
+            for values, record in saved.items():
+                require(record['new_vs_prior_frontier'] == (values not in baseline), 'Novelty mismatch')
+                require(record['new_vs_S_lt_1e12'] == (values not in old_baseline), 'Historical novelty mismatch')
+            baseline.update(near); cumulative_five += count_five
+            require(len(near) == independent['primitive_near_misses_in_added_interval'], 'Near-miss count')
+            require(len(new) == independent['new_primitive_near_misses'], 'New near-miss count')
+            require(len(baseline) == independent['cumulative_primitive_near_misses'], 'Cumulative near-miss count')
+            require(cumulative_five == independent['cumulative_unique_five_sets'], 'Cumulative five-set count')
+            require(sum(square(sum(v)) for v in baseline) == independent['cumulative_square_total_near_misses'],
+                    'Cumulative square-total count')
+            batches.append({'run':name, 'frontier':cursor, 'blocks':len(manifest['completed_blocks']),
+                            'unique_five_sets':count_five, 'primitive_near_misses':len(near),
+                            'new_primitive_near_misses':len(new), 'capacity_high_water':dict(maxima),
+                            'evidence':'compact', 'excluded_partial_intervals':partials})
+            previous = directory; previous_name = name
+        certified_at = compact.check_certificate(sys.modules[__name__], previous, cursor)
+    require(cursor == FRONTIER and cumulative_five == 6807854 and len(baseline) == 983, 'Final totals')
+    require(sum(square(sum(v)) for v in baseline) == 628, 'Cumulative square totals')
     return {'passed':True, 'checked_at':datetime.now(timezone.utc).isoformat(),
             'seconds':round(time.monotonic()-start,3), 'frontier_S_exclusive':cursor,
-            'A115040_a6_strict_lower_bound':cursor//4, 'excludes_all_members_at_most_10_pow_12':True,
+            'A115040_a6_strict_lower_bound':cursor//4, 'excludes_all_members_at_most_3_times_10_pow_12':True,
+            'milestone_certified_at':certified_at, 'compact_bulk_outputs_rechecked':raw_root is not None,
             'positive_sextuples':0, 'cumulative_unique_five_sets':cumulative_five,
-            'cumulative_primitive_near_misses':len(baseline), 'cumulative_square_total_near_misses':477,
+            'cumulative_primitive_near_misses':len(baseline), 'cumulative_square_total_near_misses':628,
             'historical_capacity_check':caps, 'continuations':batches,
             'scope':'Package hashes, contiguous logged coverage including repaired boundaries, '
-                    'completion checkpoints, source/binary/output hashes, exact checks of every stored '
-                    'five-set and multi-extension record, near-miss classifications, and historical '
-                    'capacity bounds. This is an evidence audit, not a fresh enumeration of every quadruple.'}
+                    'completion checkpoints and counters, source/binary/predecessor hashes, exact checks of stored '
+                    'five-sets and all multi-extension records, near-miss classifications, and historical '
+                    'capacity bounds. Eleven compact continuations omit bulk five-set outputs: by default '
+                    'their output hashes and five-set counts are checked against recorded full-raw audits; '
+                    '--raw-root additionally rechecks the original bytes and excerpt fidelity. '
+                    'This is an evidence audit, not a fresh enumeration of every quadruple.'}
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--report', type=Path, help='Write the new summary to this JSON file')
+    parser.add_argument('--raw-root', type=Path,
+                        help='Optional original runs directory: also recheck omitted compact bulk outputs')
     args = parser.parse_args()
-    report = verify(); text = json.dumps(report, indent=2)+'\n'
+    report = verify(args.raw_root); text = json.dumps(report, indent=2)+'\n'
     if args.report:
         args.report.write_text(text, encoding='utf-8')
     print(text)

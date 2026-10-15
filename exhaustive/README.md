@@ -1,12 +1,12 @@
 # A115040: a computational lower bound for positive square-sum sextuples
 
-**Result, completed 21 September 2026:**
+**Result, certified 14 October 2026 (UTC):**
 
-> **a(6) > 1,190,800,000,000. In particular, a(6) > 10^12.**
+> **a(6) > 3 * 10^12.**
 
 Here a(6) is the least possible largest member of a set of six **distinct positive integers** whose 15 pairwise sums are perfect squares, if such a set exists. This is a computational exclusion, not a determination of a(6) or a proof that no positive sextuple exists at any size.
 
-The [OEIS A115040 entry](https://oeis.org/A115040), checked on 22 September 2026, still states the earlier bound a(6) > 10^9. This repository supplies the proposed improvement, source code, raw results, completion logs, and reproducible evidence checks.
+This package supports the updated lower bound for [OEIS A115040](https://oeis.org/A115040). It extends the earlier submission's evidence from S < 4,763,200,000,000 to S < 12,000,000,000,000, using the same enumeration source. The new continuations are supplied as compact evidence archives; their bulk five-set outputs remain outside this repository.
 
 ## 1. What was searched, and why it proves the bound
 
@@ -14,11 +14,11 @@ Write a candidate sextuple in increasing order as
 
     0 < a < b < c < d < e < f,    S = a+b+c+d.
 
-The completed census excludes every sextuple with **S < 4,763,200,000,000**. The two largest members e and f are not independently capped by the search.
+The completed census excludes every sextuple with **S < 12,000,000,000,000**. The two largest members e and f are not independently capped by the search.
 
-Since a, b, c are all smaller than d, we have S < 4d. Thus d <= 1,190,800,000,000 would imply S < 4,763,200,000,000, contradicting the exhaustive exclusion. Consequently d, and therefore f, must exceed **1,190,800,000,000**.
+Since a, b, c are all smaller than d, we have S < 4d. Thus d <= 3,000,000,000,000 would imply S < 12,000,000,000,000, contradicting the exhaustive exclusion. Consequently d, and therefore f, must exceed **3,000,000,000,000**.
 
-In particular, **there is no sextuple whose six members are all at most 10^12**. This includes the endpoint 10^12 and is stronger than saying only that the members are below 10^12. The distinction between S (the sum of four members) and f (the largest member) is essential: the older census to S < 10^12 alone gave only the bound 2.5*10^11.
+In particular, **there is no sextuple whose six members are all at most 3 * 10^12**. This includes the endpoint 3 * 10^12. The distinction between S (the sum of four members) and f (the largest member) is essential: the older census to S < 10^12 alone gave only the bound 2.5*10^11.
 
 ### Coverage ledger
 
@@ -31,9 +31,24 @@ All intervals below are half-open: the left endpoint is included, the right excl
 | 18-19 September continuation | [1,954,600,000,000, 2,723,100,000,000) | 155 | 512,820 |
 | 19-20 September continuation | [2,723,100,000,000, 3,512,100,000,000) | 159 | 471,454 |
 | 20-21 September continuation | [3,512,100,000,000, 4,763,200,000,000) | 252 | 673,688 |
-| **Total** | **[1, 4,763,200,000,000)** | **758 continuation blocks + bridge + historical coverage** | **3,791,838** |
+| 26-28 September (`hybrid-2026-09-26`) | [4,763,200,000,000, 7,120,600,000,000) | 474 | 1,105,179 |
+| 28-29 September | [7,120,600,000,000, 7,800,700,000,000) | 139 | 291,704 |
+| 29 September, to a(6) > 2 * 10^12 | [7,800,700,000,000, 8,000,000,000,000) | 41 | 83,640 |
+| 1 October (`second-anchor`) | [8,000,000,000,000, 8,489,300,000,000) | 100 | 201,745 |
+| 2 October (`triple-pool`) | [8,489,300,000,000, 9,070,200,000,000) | 119 | 233,721 |
+| 3 October (`fresh-adaptive`) | [9,070,200,000,000, 9,698,000,000,000) | 129 | 246,550 |
+| 4 October (`creative`) | [9,698,000,000,000, 10,047,600,000,000) | 72 | 134,238 |
+| 5 October | [10,047,600,000,000, 10,596,500,000,000) | 113 | 207,410 |
+| 6 October | [10,596,500,000,000, 11,208,800,000,000) | 125 | 227,044 |
+| 13 October | [11,208,800,000,000, 11,762,800,000,000) | 114 | 200,219 |
+| 14 October, milestone | [11,762,800,000,000, 12,000,000,000,000) | 49 | 84,566 |
+| **Total** | **[1, 12,000,000,000,000)** | **2,233 continuation blocks + bridge + historical coverage** | **6,807,854** |
 
-No sextuple was found. All continuation blocks completed and both recorded audits passed for each continuation. The cumulative auxiliary catalog contains 740 primitive six-member near misses with exactly 14 square pair sums, including 477 whose total is square. Primitive means that no common square factor greater than one can be removed; it does not mean that the gcd is one. These counts are not a probability model for finding a sextuple.
+No sextuple was found. Every interval counted above completed with exit code zero, and both recorded exhaustive audits passed for each continuation. One interrupted interval in `hybrid-2026-09-26`, [7,120,600,000,000, 7,121,000,000,000), is preserved but contributes no coverage or census counts; the next run starts at its left endpoint and covers it completely.
+
+The final 49 intervals comprise one interval of 100 million S, 47 of five billion, and one of 2.1 billion. The milestone certificate was issued at **2026-10-14 23:00:32.703309 UTC** after both exhaustive verifiers exited successfully. It is included with its hashed audit copies. Later heuristic experiments are outside this evidence package and contribute nothing to the bound.
+
+The cumulative auxiliary catalog contains 983 primitive six-member near misses with exactly 14 square pair sums, including 628 whose total is square. Primitive means that no common square factor greater than one can be removed; it does not mean that the gcd is one. These counts are not a probability model for finding a sextuple.
 
 ## 2. Verify the supplied evidence (no search)
 
@@ -43,22 +58,36 @@ Requires **Python 3.10 or later**, standard library only. From this folder:
 python3 -B verify.py --report verification.local.json
 ```
 
-On Windows, `python` may replace `python3`. Do not use `-O`, which disables assertions used by the archived checker. The verifier uses one process, reads the compressed evidence, temporarily expands about 330 MB of records, and removes that temporary copy afterwards. It does not execute the archived binaries or start an exhaustive run. Allow a few minutes and roughly 1 GB of free memory. All paths used for verification are relative to this folder; there is no dependency on the author's WSL home directory or another repository.
+On Windows, `python` may replace `python3`. Do not use `-O`, which disables assertions used by the archived checker. The verifier uses one process, reads the compressed evidence, temporarily expands the historical raw records and the compact continuation evidence, and removes that temporary copy afterwards. It does not execute the archived binaries or start an exhaustive run. Allow a few minutes and roughly 1 GB of free memory. All paths used for verification are relative to this folder; there is no dependency on the author's WSL home directory or another repository.
 
 The verifier checks:
 
-- SHA-256 hashes from `SHA256SUMS`, then original source, binary, output, checkpoint, and predecessor hashes inside the manifests.
+- SHA-256 hashes from `SHA256SUMS`, then original source, binary, checkpoint, and predecessor hashes inside the manifests. Included raw outputs are hashed directly; omitted bulk outputs have recorded hash commitments and full-raw audit records.
 - Contiguous coverage from S = 1, including all nine repaired historical boundaries and the bridge [10^12, 10^12+10^9).
 - Completed per-thread ranges, counters, `DONE` checkpoints, failure markers, and continuation capacity maxima.
 - Positivity, distinctness, the reported S, and all ten pair sums of every stored five-set using exact integer square roots.
 - Every stored multi-extension quadruple, all of its extensions, and every extension pair; any square remaining pair would be a sextuple and fails the claimed exclusion.
-- Primitive near-miss catalogs, square totals, Euler classifications, novelty against preceding catalogs, and historical capacity bounds.
+- Primitive near-miss catalogs, square totals, Euler classifications, novelty against preceding catalogs, historical capacity bounds, and the final milestone certificate.
 
 [verification.json](verification.json) records a successful verification of this package. It is a generated report, excluded from its own checksum list. `SHA256SUMS` preserves exact bytes of the supporting files; `.gitattributes` prevents line-ending conversion during a Git checkout. A locally generated `verification.local.json` is also excluded from the published checksum list.
 
+### Compact continuation evidence and optional raw-data check
+
+The four original continuation archives and historical raw file are unchanged. The eleven new `*-compact.tar.gz` archives contain the original manifests, both exhaustive audit reports, status, near-miss catalogs, source snapshots and binary, every completed interval's stderr and checkpoint, and **every `M:` multi-extension record**. The unfinished interval's small raw output is also included. No heuristic output is included.
+
+To keep this update small, the new archives omit completed intervals' bulk `5:` output lines. Before packaging, `pack_compact.py` read those full files locally, matched their original SHA-256 hashes and counters, checked all ten sums of every five-set, deduplicated the results, and checked every extension pair. Each archive includes the resulting `raw-verification.json`. The default portable verifier checks those recorded five-set counts and hash commitments against the original completion evidence; **it cannot recompute a hash or check five-set members from bytes that are not supplied**. All multi-extension records are included and rechecked directly.
+
+If the original run tree is available locally, the same verifier can additionally recheck the omitted raw files and compare the excerpts byte for byte:
+
+```sh
+python3 -B verify.py --raw-root /path/to/original/runs --report verification.local.json
+```
+
+It expects `runs/<run-name>/exhaustive/block-*.out`. This option is unnecessary for auditing the supplied compact evidence; a fresh enumeration from `s4.c` is another way to reproduce the search. `pack_compact.py /path/to/original/runs` rebuilds the eleven compact archives after checking the full outputs, without running a search. Rebuilding changes audit timestamps and requires regenerating checksums.
+
 ### Scope of the computational evidence
 
-This is an audit of the stored census and its coverage records, supported by the exhaustive algorithm and its tests. It is **not** a new implementation independently enumerating the entire historical range, and it is not a formal proof-assistant certificate. Checking reported solutions alone cannot prove that an enumerator omitted none; the completeness argument, implementation, coverage logs, and validation checks together support the computational bound. An editor can reproduce the enumeration using the supplied C source.
+This is an audit of the supplied census records, compact continuation evidence, and recorded full-raw checks, supported by the exhaustive algorithm and its tests. It is **not** a new implementation independently enumerating the entire historical range, and it is not a formal proof-assistant certificate. Checking reported solutions alone cannot prove that an enumerator omitted none; the completeness argument, implementation, coverage logs, and validation checks together support the computational bound. An editor can reproduce the enumeration using the supplied C source.
 
 ## 3. Historical repairs and implementation provenance
 
@@ -74,7 +103,7 @@ The historical source snapshot is `evidence/s4-historical.c`. It had fixed-capac
 
 The first two bounds are recomputed by finite enumeration of nonincreasing prime-exponent patterns. Moving larger exponents to smaller primes reduces the integer without changing its divisor count; for representations, only primes congruent to 1 modulo 4 contribute, with at most ceil(product(exponent+1)/2) positive unordered representations. See `capacity_bounds()` in `verify.py`.
 
-The current `s4.c` is the exact source used by all four continuations. It aborts on representation, divisor, extension, and bucket overflows instead of silently truncating; records capacity high-water marks; and checks result writes and thread creation. It passed the recorded small-census equivalence, deliberately forced capacity failures, interrupted checkpoint/resume equivalence, and frontier-interval checks. The first continuation archive contains `preflight/summary.json` and the bridge output. At the final frontier the largest observed array usages were 256/512 representations, 4608/16384 divisors, and 3/64 extensions.
+The current `s4.c` is the exact source used by all fifteen continuations. It aborts on representation, divisor, extension, and bucket overflows instead of silently truncating; records capacity high-water marks; and checks result writes and thread creation. It passed the recorded small-census equivalence, deliberately forced capacity failures, interrupted checkpoint/resume equivalence, and frontier-interval checks. The first continuation archive contains `preflight/summary.json` and the bridge output. Across the completed continuations the largest observed array usages were 288/512 representations, 6480/16384 divisors, and 3/64 extensions.
 
 Source hashes:
 
@@ -145,7 +174,7 @@ To reproduce the entire result, this shell loop uses adjacent intervals without 
 ```sh
 mkdir -p reproduction
 lo=1
-frontier=4763200000000
+frontier=12000000000000
 step=5000000000
 while [ "$lo" -lt "$frontier" ]; do
     hi=$((lo+step))
@@ -160,28 +189,30 @@ while [ "$lo" -lt "$frontier" ]; do
 done
 ```
 
-The example uses four low-priority workers for convenience; thread count is not part of the mathematical bound. Recorded timings used different counts and scheduling policies, so they are not a fixed runtime promise. The last continuation took 14h26m55s of search with ten low-priority workers under adaptive CPU affinity; both final audits completed inside its fifteen-hour budget. This package does not install the original Windows CPU monitor.
+The example uses four low-priority workers for convenience; thread count is not part of the mathematical bound. Recorded timings used different counts and scheduling policies, so they are not a fixed runtime promise. The final exhaustive phase ran from 2026-10-14 19:49:44.471532 to 22:59:50.182049 UTC (3h10m05.711s), with ten low-priority workers under adaptive CPU affinity. It added 237.2 billion S at about 74.868 billion S per hour. This timing excludes subsequent heuristic work and final reporting. This package does not install the original Windows CPU monitor.
 
 ## 6. Files
 
 | Path | Purpose |
 |---|---|
 | `s4.c` | Current, unchanged continuation source |
-| `verify.py` | Portable audit of the entire packaged evidence |
+| `verify.py`, `compact.py` | Portable audit, with optional rechecking of omitted bulk outputs |
 | `verification.json` | Successful package verification record |
 | `SHA256SUMS`, `.gitattributes` | File integrity and preservation of exact bytes |
 | `make_checksums.py`, `test_verify.py` | Regenerate checksums after intentional edits; test the portable reader |
 | `analyze.py`, `analysis_1e12.txt` | Corrected historical result analysis |
 | `logs/` | Original historical completion logs and all nine boundary repairs |
 | `evidence/all_1e12.out.gz` | Full historical raw output; SHA refers to its decompressed bytes |
-| `evidence/exhaustive-*.tar.gz` | Four continuations: original manifests, audits, raw outputs, stderr, checkpoints, source snapshots, and archived binary |
+| `evidence/exhaustive-2026-09-{16,18,19,20}.tar.gz` | Four original continuations, including full raw outputs, preserved unchanged |
+| `evidence/*-compact.tar.gz` | Eleven later continuations: completion records, all multi-extension records, recorded full-raw checks; bulk five-set outputs omitted |
+| `pack_compact.py` | Rebuild compact archives from the original local run tree; no search |
 | `evidence/verify_continuation.original.py` | Original independent verifier, retained byte-for-byte; mathematical helpers reused by `verify.py` |
 | `evidence/s4-historical.c` | Historical source snapshot |
 | `evidence/historical-data-verification.json` | September 15 recheck of the historical data |
 | `evidence/analysis_1e12.legacy.txt` | Superseded historical analysis, preserved for provenance |
 | `LICENSE` | MIT license |
 
-The package is about 145 MB, principally compressed raw results. Include the `evidence/` directory when publishing. No raw data needs to be requested privately. The executable files inside the archives are evidence for binary hashes; verification does not execute them. Regenerate `SHA256SUMS` if intentionally changing a covered file, and rerun verification before publishing that revision.
+Most of this package is the roughly 145 MB of compressed evidence already present in the earlier submission. This update adds about 3.1 MB of compact continuation archives (each under 900 KB) plus small text/code files. Include the `evidence/` directory when publishing. The omitted new bulk outputs are not needed by the default verifier; they are needed for its optional full-raw recheck. The executable files inside the archives are evidence for binary hashes; verification does not execute them. Regenerate `SHA256SUMS` if intentionally changing a covered file, and rerun verification before publishing that revision.
 
 ## License
 

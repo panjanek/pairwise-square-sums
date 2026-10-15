@@ -1,14 +1,16 @@
 {
   "passed": true,
-  "checked_at": "2026-09-22T19:38:39.746495+00:00",
-  "seconds": 16.559,
-  "frontier_S_exclusive": 4763200000000,
-  "A115040_a6_strict_lower_bound": 1190800000000,
-  "excludes_all_members_at_most_10_pow_12": true,
+  "checked_at": "2026-10-15T04:46:07.370813+00:00",
+  "seconds": 37.416,
+  "frontier_S_exclusive": 12000000000000,
+  "A115040_a6_strict_lower_bound": 3000000000000,
+  "excludes_all_members_at_most_3_times_10_pow_12": true,
+  "milestone_certified_at": "2026-10-14T23:00:32.703309+00:00",
+  "compact_bulk_outputs_rechecked": false,
   "positive_sextuples": 0,
-  "cumulative_unique_five_sets": 3791838,
-  "cumulative_primitive_near_misses": 740,
-  "cumulative_square_total_near_misses": 477,
+  "cumulative_unique_five_sets": 6807854,
+  "cumulative_primitive_near_misses": 983,
+  "cumulative_square_total_near_misses": 628,
   "historical_capacity_check": {
     "historical_S_exclusive": 1000000000000,
     "maximum_divisors": 6720,
@@ -69,7 +71,182 @@
         "divisors": 4608,
         "extensions": 3
       }
+    },
+    {
+      "run": "hybrid-2026-09-26",
+      "frontier": 7120600000000,
+      "blocks": 474,
+      "unique_five_sets": 1105179,
+      "primitive_near_misses": 578,
+      "new_primitive_near_misses": 126,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 5376,
+        "extensions": 3
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": [
+        {
+          "id": "block-0475",
+          "lo": 7120600000000,
+          "hi": 7121000000000,
+          "returncode": -15,
+          "raw_five_sets": 90,
+          "multi_records": 0,
+          "contributes_coverage": false
+        }
+      ]
+    },
+    {
+      "run": "exhaustive-2026-09-28",
+      "frontier": 7800700000000,
+      "blocks": 139,
+      "unique_five_sets": 291704,
+      "primitive_near_misses": 246,
+      "new_primitive_near_misses": 23,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 5184,
+        "extensions": 3
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
+    },
+    {
+      "run": "exhaustive-to-2e12-2026-09-29",
+      "frontier": 8000000000000,
+      "blocks": 41,
+      "unique_five_sets": 83640,
+      "primitive_near_misses": 122,
+      "new_primitive_near_misses": 8,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 4800,
+        "extensions": 2
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
+    },
+    {
+      "run": "second-anchor-2026-10-01",
+      "frontier": 8489300000000,
+      "blocks": 100,
+      "unique_five_sets": 201745,
+      "primitive_near_misses": 173,
+      "new_primitive_near_misses": 13,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 5184,
+        "extensions": 2
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
+    },
+    {
+      "run": "triple-pool-2026-10-02",
+      "frontier": 9070200000000,
+      "blocks": 119,
+      "unique_five_sets": 233721,
+      "primitive_near_misses": 219,
+      "new_primitive_near_misses": 21,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 5184,
+        "extensions": 3
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
+    },
+    {
+      "run": "fresh-adaptive-2026-10-03",
+      "frontier": 9698000000000,
+      "blocks": 129,
+      "unique_five_sets": 246550,
+      "primitive_near_misses": 209,
+      "new_primitive_near_misses": 12,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 5760,
+        "extensions": 3
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
+    },
+    {
+      "run": "creative-2026-10-04",
+      "frontier": 10047600000000,
+      "blocks": 72,
+      "unique_five_sets": 134238,
+      "primitive_near_misses": 141,
+      "new_primitive_near_misses": 3,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 5184,
+        "extensions": 3
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
+    },
+    {
+      "run": "exhaustive-2026-10-05-8h",
+      "frontier": 10596500000000,
+      "blocks": 113,
+      "unique_five_sets": 207410,
+      "primitive_near_misses": 173,
+      "new_primitive_near_misses": 9,
+      "capacity_high_water": {
+        "representations": 288,
+        "divisors": 5184,
+        "extensions": 2
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
+    },
+    {
+      "run": "exhaustive-2026-10-06-9h",
+      "frontier": 11208800000000,
+      "blocks": 125,
+      "unique_five_sets": 227044,
+      "primitive_near_misses": 197,
+      "new_primitive_near_misses": 14,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 6048,
+        "extensions": 3
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
+    },
+    {
+      "run": "exhaustive-2026-10-13-8h",
+      "frontier": 11762800000000,
+      "blocks": 114,
+      "unique_five_sets": 200219,
+      "primitive_near_misses": 178,
+      "new_primitive_near_misses": 6,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 6480,
+        "extensions": 3
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
+    },
+    {
+      "run": "milestone-3e12-2026-10-14-8h",
+      "frontier": 12000000000000,
+      "blocks": 49,
+      "unique_five_sets": 84566,
+      "primitive_near_misses": 90,
+      "new_primitive_near_misses": 8,
+      "capacity_high_water": {
+        "representations": 256,
+        "divisors": 5376,
+        "extensions": 2
+      },
+      "evidence": "compact",
+      "excluded_partial_intervals": []
     }
   ],
-  "scope": "Package hashes, contiguous logged coverage including repaired boundaries, completion checkpoints, source/binary/output hashes, exact checks of every stored five-set and multi-extension record, near-miss classifications, and historical capacity bounds. This is an evidence audit, not a fresh enumeration of every quadruple."
+  "scope": "Package hashes, contiguous logged coverage including repaired boundaries, completion checkpoints and counters, source/binary/predecessor hashes, exact checks of stored five-sets and all multi-extension records, near-miss classifications, and historical capacity bounds. Eleven compact continuations omit bulk five-set outputs: by default their output hashes and five-set counts are checked against recorded full-raw audits; --raw-root additionally rechecks the original bytes and excerpt fidelity. This is an evidence audit, not a fresh enumeration of every quadruple."
 }
